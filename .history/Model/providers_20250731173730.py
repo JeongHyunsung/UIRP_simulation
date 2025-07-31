@@ -8,7 +8,7 @@ from utils.utils import merge_intervals
 class Provider:
     def __init__(self, d: Dict[str, Any]):
         self.throughput: float = float(d.get("throughput", 1.0))          # GFLOP/s
-        self.price_per_gpu_hour: float = float(d.get("price", 0.0))       # $ 테스트pr
+        self.price_per_gpu_hour: float = float(d.get("price", 0.0))       # $ 테스트트
         self.bandwidth: float = float(d.get("bandwidth", 0.0))            # MB/s
 
         raw = d.get("available_hours", [])

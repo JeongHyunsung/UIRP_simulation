@@ -5,7 +5,7 @@ from typing import List
 from Model.tasks import Tasks, Task
 from Model.providers import Providers
 from Core.Scheduler.interface import TaskSelector, MetricEvaluator
-from Core.Scheduler.registry import COMBO_REG, DISP_REG
+from Core.Scheduler.registry import COMBO_REG, DISP_REG, METRIC_REG, SELECTOR_REG
 
 Assignment = tuple[str, int, datetime.datetime, datetime.datetime, int]
 
@@ -14,12 +14,10 @@ class BaselineScheduler:
                  selector: TaskSelector = None,
                  evaluator: MetricEvaluator = None,
                  verbose=False):
-        from Core.Scheduler.task_selector.fifo import FIFOTaskSelector
-        from Core.Scheduler.metric_evaluator.baseline import BaselineEvaluator
-        self.selector = selector or FIFOTaskSelector()
+        self.selector = selector or SELECTOR_REG[algo]()
         self.generator = COMBO_REG[algo]()
         self.dispatcher = DISP_REG[algo]()
-        self.evaluator = evaluator or BaselineEvaluator()
+        self.evaluator = evaluator or METRIC_REG[algo]()
         self.time_gap = time_gap
         self.verbose = verbose
         self.waiting_tasks: List[Task] = []
