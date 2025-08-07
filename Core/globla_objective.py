@@ -29,7 +29,6 @@ def calc_objective(
     exclude_global_transfer: True인 경우 글로벌 파일 전송 비용을 제외합니다.
     (GPU 내 다중 씬 할당 시 첫 번째 씬이 아닌 경우 사용)
     """
-    weights = weights or DEFAULT_WEIGHTS
     a1, a2, a3, b1, b2 = weights
     
     # 글로벌 파일 비용 조정

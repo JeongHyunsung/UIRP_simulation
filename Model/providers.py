@@ -8,7 +8,7 @@ from utils.utils import merge_intervals
 class Provider:
     def __init__(self, d: Dict[str, Any]):
         self.throughput: float = float(d.get("throughput", 1.0))          # GFLOP/s
-        self.price_per_gpu_hour: float = float(d.get("price", 0.0))       # $
+        self.price_per_gpu_hour: float = float(d.get("price", 0.0))       # $ 테스트pr
         self.bandwidth: float = float(d.get("bandwidth", 0.0))            # MB/s
 
         raw = d.get("available_hours", [])
@@ -20,6 +20,9 @@ class Provider:
 
         # (task_id, scene_id, start, finish)
         self.schedule: List[Tuple[str, int, datetime.datetime, datetime.datetime]] = []
+        
+        # 글로벌 파일을 이미 받은 task들 추적
+        self.received_global_files: set = set()
 
     # ---------------------------------------------------
     # 메트릭
@@ -56,6 +59,9 @@ class Provider:
                start: datetime.datetime, dur_h: float):
         finish = start + datetime.timedelta(hours=dur_h)
         self.schedule.append((task_id, scene_id, start, finish))
+        
+        # 해당 task의 글로벌 파일을 받았다고 표시
+        self.received_global_files.add(task_id)
 
         # available_hours 업데이트(틈새 제거)
         new=[]
