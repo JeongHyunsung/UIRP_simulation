@@ -1,9 +1,10 @@
 from Core.Scheduler.task_selector.fifo import FIFOTaskSelector
 from Core.Scheduler.metric_evaluator.baseline import BaselineEvaluator
 from Core.Scheduler.combo_generator.brute_force import BruteForceGenerator
+from Core.Scheduler.combo_generator.hungarian import HungarianComboGenerator
 from Core.Scheduler.dispatcher.sequential import SequentialDispatcher
 
-COMBO_REG = {"bf": BruteForceGenerator}
+COMBO_REG = {"bf": BruteForceGenerator, "hungarian": HungarianComboGenerator}
 
 DISP_REG = {"bf": SequentialDispatcher}
 
